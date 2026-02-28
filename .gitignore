@@ -1,0 +1,18 @@
+# 飞书配置（包含敏感 Webhook URL）
+feishu_config.json
+
+# 日志文件
+*.log
+cron.log
+
+# Python 缓存
+__pycache__/
+*.pyc
+
+# 虚拟环境
+venv/
+.env/
+
+# IDE
+.vscode/
+.idea/

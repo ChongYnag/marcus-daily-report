@@ -1,0 +1,40 @@
+name: Marcus Daily Momentum Report
+
+on:
+  schedule:
+    # 每个交易日 7:00 (UTC 时间 23:00，因为 Asia/Shanghai = UTC+8)
+    # 周一到周五
+    - cron: '0 23 * * 1-5'
+  
+  # 允许手动触发
+  workflow_dispatch:
+
+jobs:
+  run-marcus:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: 📥 检出代码
+        uses: actions/checkout@v4
+      
+      - name: 🐍 设置 Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      
+      - name: 📦 安装依赖
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests
+      
+      - name: 📬 发送飞书通知
+        run: python3 send_feishu_github.py
+        env:
+          FEISHU_WEBHOOK: ${{ secrets.FEISHU_WEBHOOK }}
+      
+      - name: 📊 上传报告
+        uses: actions/upload-artifact@v4
+        with:
+          name: marcus-report-${{ github.run_number }}
+          path: reports/
+          retention-days: 7

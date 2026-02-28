@@ -1,0 +1,9 @@
+{
+  "enabled": true,
+  "webhook_url": "https://open.feishu.cn/open-apis/bot/v2/hook/YOUR_WEBHOOK_HERE",
+  "send_mode": "interactive",
+  "notify_time": "08:30",
+  "timezone": "Asia/Shanghai",
+  "skip_weekends": true,
+  "skip_holidays": false
+}

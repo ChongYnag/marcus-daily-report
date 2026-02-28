@@ -1,0 +1,30 @@
+{
+  "name": "marcus-daily-report",
+  "version": "1.0.0",
+  "description": "Marcus 每日动量报告 - 量化交易策略分析",
+  "author": "Marcus (15y Wall Street Quant)",
+  "type": "scheduled-task",
+  "schedule": {
+    "cron": "30 8 * * 1-5",
+    "timezone": "Asia/Shanghai",
+    "description": "每个交易日早上 8:30 生成报告"
+  },
+  "execution": {
+    "command": "python3",
+    "args": ["marcus_daily.py"],
+    "workdir": "./agents/marcus",
+    "timeout": 300
+  },
+  "output": {
+    "format": "markdown",
+    "saveTo": "./agents/marcus/reports/{date}_report.md",
+    "notify": true
+  },
+  "configuration": {
+    "market": "US",
+    "timezone": "America/New_York",
+    "reportTime": "pre-market",
+    "stockPoolSize": 5,
+    "riskTolerance": "moderate"
+  }
+}
