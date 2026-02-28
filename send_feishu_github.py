@@ -14,9 +14,14 @@ def generate_report():
     today = datetime.now().strftime('%Y-%m-%d')
     weekday = datetime.now().strftime('%A')
     
-    # 周末检查（虽然 GitHub Actions 已配置周一到周五，但保留此检查）
-    if weekday in ['Saturday', 'Sunday']:
+    # 周末检查（可以通过环境变量跳过，用于测试）
+    skip_weekend = os.environ.get('SKIP_WEEKEND', 'true').lower() == 'true'
+    if weekday in ['Saturday', 'Sunday'] and skip_weekend:
         return None, "周末休市"
+    
+    # 如果是周末但不跳过（测试模式），添加标记
+    if weekday in ['Saturday', 'Sunday']:
+        today += " (周末测试)"
     
     # 市场数据（简化版，实际可接入 API）
     vix = 18.5
